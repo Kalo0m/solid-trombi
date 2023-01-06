@@ -9,11 +9,11 @@ type StudentListProps = {
 };
 
 const StudentList: ParentComponent<StudentListProps> = (props) => {
-  // const [isCreating, create] = createStudentAction();
+  const [isCreating, create] = createStudentAction();
 
   const onAddClick = async () => {
     console.log("onAddClick");
-    // await create({ firstname: "Théo", lastname: "Letouzé", email: "theo@let" });
+    await create({ firstname: "Théo", lastname: "Letouzé", email: "theo@let" });
   };
 
   return (
@@ -27,7 +27,7 @@ const StudentList: ParentComponent<StudentListProps> = (props) => {
           )}
         </For>
         <div
-          class="flex justify-center items-center"
+          class="flex h-64 justify-center items-center"
           onClick={() => onAddClick()}
         >
           <div class=" cursor-pointer mb-2 rounded-full w-14 h-14 bg-slate-800 flex justify-center items-center">
