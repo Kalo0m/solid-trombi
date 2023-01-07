@@ -12,6 +12,8 @@ export const serverScheme = z.object({
   GITHUB_SECRET: z.string(),
   GOOGLE_CLIENT_SECRET: z.string(),
   GOOGLE_CLIENT_ID: z.string(),
+  FACEBOOK_CLIENT_SECRET: z.string(),
+  FACEBOOK_CLIENT_ID: z.string(),
   AUTH_SECRET: z.string(),
   AUTH_TRUST_HOST: z.string().optional(),
   NEXTAUTH_URL: z.string().optional(),

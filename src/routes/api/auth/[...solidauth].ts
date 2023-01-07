@@ -6,6 +6,7 @@ import { prisma } from "~/server/db/client";
 import { AdapterUser } from "@auth/core/adapters";
 import GoogleProvider from "@auth/core/providers/google";
 import { redirect } from "solid-start";
+import FacebookProvider from "@auth/core/providers/facebook";
 
 export const authOpts: SolidAuthConfig = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -23,9 +24,14 @@ export const authOpts: SolidAuthConfig = {
       
       clientId: serverEnv.GOOGLE_CLIENT_ID,
       clientSecret: serverEnv.GOOGLE_CLIENT_SECRET
+    }),
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore types error
+    FacebookProvider({
+      clientId: serverEnv.FACEBOOK_CLIENT_ID,
+      clientSecret: serverEnv.FACEBOOK_CLIENT_SECRET
     })
   ],
-
   session: {
     strategy: "database",
     generateSessionToken: () => {
@@ -34,21 +40,22 @@ export const authOpts: SolidAuthConfig = {
   },
   debug: false,
   callbacks: {
-    
     session: async ({ session, user }) => {
       session.user = user;
-      console.log(user)
-      console.log(session)
       return Promise.resolve(session);
     },
     jwt: async (attrs) => {
-      console.log(attrs)
       return Promise.resolve(attrs);
     },
-    
+    async redirect({ url, baseUrl }) {
+      console.log(baseUrl, url)
+      // Allows relative callback URLs
+      if (url.startsWith("/")) return `${baseUrl}${url}`
+      // Allows callback URLs on the same origin
+      else if (new URL(url).origin === baseUrl) return url
+      return baseUrl
+    }
   },
-  
- 
 };
 
 export const { GET, POST } = SolidAuth(authOpts);
