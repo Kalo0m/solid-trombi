@@ -13,10 +13,8 @@ export default createHandler(
   ({ forward }) => {
     return async (event) => {
       if (protectedPaths.includes(new URL(event.request.url).pathname)) {
-        console.log(event.request);
         const user = await getSession(event.request, authOpts);
         console.log(user);
-
         if (!user) {
           return redirect("/login"); // a page for a non logged in user
         }

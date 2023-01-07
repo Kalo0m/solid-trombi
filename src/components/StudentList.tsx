@@ -1,18 +1,17 @@
-import type { Student } from "@prisma/client";
+import type { User } from "@prisma/client";
 import type { ParentComponent } from "solid-js";
 import { For } from "solid-js";
 import { createStudentAction } from "~/service/student";
 import StudentITem from "./StudentITem";
 
 type StudentListProps = {
-  students: Student[];
+  students: User[];
 };
 
 const StudentList: ParentComponent<StudentListProps> = (props) => {
   const [isCreating, create] = createStudentAction();
 
   const onAddClick = async () => {
-    console.log("onAddClick");
     await create({ firstname: "Théo", lastname: "Letouzé", email: "theo@let" });
   };
 

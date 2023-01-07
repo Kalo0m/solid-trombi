@@ -4,5 +4,5 @@
 
 body {
   overflow-x: hidden;
-  @apply bg-slate-900;
+  @apply bg-slate-900 text-white;
 }

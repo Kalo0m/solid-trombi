@@ -1,16 +1,34 @@
 import { signIn } from "@auth/solid-start/client";
-
+import { AiFillGithub } from "solid-icons/ai";
 export default () => {
+  const handleLogin = (provider: string) => {
+    signIn(provider);
+  };
+
   return (
     <div class="flex flex-col justify-center items-center h-screen bg-slate-900">
       <button
-        onClick={() => signIn("github")}
-        class="rounded px-4 py-2 bg-slate-800"
+        onClick={() => handleLogin("github")}
+        class=" flex items-center text-slate-200 rounded mb-5 px-6 py-3 bg-slate-800"
       >
-        <p class=" text-blue-500 text-xl font-semibold">Login</p>
+        <AiFillGithub
+          color="text-slate-200"
+          class="mr-3 text-slate-200"
+          size="24"
+        />
+        <p class="  text-lg font-semibold">Login with Github</p>
       </button>
-      <label class="text-white">Comment voulez-vous qu'on vous appelle ?</label>
-      <input />
+      <button
+        onClick={() => handleLogin("google")}
+        class=" flex items-center text-slate-200 rounded mb-5 px-6 py-3 bg-slate-800"
+      >
+        <AiFillGithub
+          color="text-slate-200"
+          class="mr-3 text-slate-200"
+          size="24"
+        />
+        <p class="  text-lg font-semibold">Login with Google</p>
+      </button>
     </div>
   );
 };
