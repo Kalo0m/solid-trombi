@@ -4,5 +4,9 @@
 
 body {
   overflow-x: hidden;
+
   @apply bg-slate-900 text-white;
+}
+* {
+  box-sizing: border-box;
 }

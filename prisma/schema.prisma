@@ -45,4 +45,17 @@ model User {
     sessions      Session[]
     firstname     String?
     lastname      String?
+    year          Int?      @default(2023)
+    admin         Boolean?  @default(false)
+    company       String?
+    tags          String[]
+}
+
+enum Tag {
+    Front
+    Back
+    Maths
+    SSG
+    Coq
+    Anglais
 }

@@ -5,6 +5,7 @@ import {
   Show,
   createSignal,
   createMemo,
+  For,
 } from "solid-js";
 import { A, Title } from "solid-start";
 import { createServerData$ } from "solid-start/server";
@@ -18,46 +19,101 @@ import type { Prisma, Session, User } from "@prisma/client";
 import { SessionTokenError } from "@auth/core/errors";
 
 const Home: VoidComponent = () => {
+  const tagsAvailable = ["Front", "Back", "Maths", "SSG", "Coq", "Anglais"];
   const user = getCurrentUser();
   const [, update] = updateUser();
   const [newPseudo, setNewPseudo] = createSignal(user()?.name ?? "");
-  const localStudents = createServerData$(() => prisma.user.findMany());
+  const [promotion, setPromotion] = createSignal(2022);
+  const [company, setCompany] = createSignal("");
+  const [tags, setTags] = createSignal<string[]>([]);
+
   return (
     <>
       <Title>Home</Title>
 
       <div class=" w-screen min-h-screen md:p-10 overflow-x-hidden">
         <Show
-          when={user()?.firstname || user()?.lastname}
+          when={user()?.firstname}
           fallback={
-            <div class="flex flex-col justify-center items-center h-screen">
-              <label class="text-white text-2xl">
+            <div class="flex flex-col justify-center items-start w-2/3 h-screen mx-auto">
+              <label class="text-slate-100 text-xl">
                 Comment voulez-vous qu'on vous appelle ?
               </label>
               <input
+                type="text"
                 value={newPseudo()}
                 onInput={(e) => setNewPseudo(e.currentTarget.value)}
-                class="mt-3 mb-6 outline-none border-none px-4 py-3 w-72 text-xl text-white rounded-lg bg-slate-700"
+                class="mt-3 mb-4 h-10  border-spacing-44 transition-all border-collapse border-opacity-0 border-none focus:!border focus:border-blue-600 selection:border-blue-600 outline-none px-4 py-2 w-72 text-xl text-white rounded-md bg-slate-700"
               />
+              <label class="text-slate-100 text-xl">
+                Quel est votre entreprise ?
+              </label>
+              <input
+                type="text"
+                value={company()}
+                onInput={(e) => setCompany(e.currentTarget.value)}
+                class="mt-3 mb-4 h-10  border-spacing-44 transition-all border-collapse border-opacity-0 border-none focus:!border focus:border-blue-600 selection:border-blue-600 outline-none px-4 py-2 w-72 text-xl text-white rounded-md bg-slate-700"
+              />
+              <label class="text-slate-100 text-xl">
+                Quelle est votre promotion ?
+              </label>
+              <select
+                value={promotion()}
+                onChange={(e) => setPromotion(parseInt(e.currentTarget.value))}
+                class="bg-slate-700 border-none outline-none px-6 py-2 rounded-md  mb-4 mt-3"
+              >
+                <option value="2023">2023 (A3)</option>
+                <option value="2024">2024 (A4)</option>
+                <option value="2025">2025 (A5)</option>
+              </select>
+              <label class="text-slate-100 text-xl">
+                Choisissez vos tags (max 3)
+              </label>
+              <div class="flex mt-3 mb-6 flex-row flex-wrap">
+                <For each={tagsAvailable}>
+                  {(tag) => (
+                    <div
+                      onClick={() => {
+                        if (tags().includes(tag)) {
+                          setTags(tags().filter((t) => t !== tag));
+                        } else {
+                          if (tags().length < 3) {
+                            setTags((tags) => [...tags, tag]);
+                          }
+                        }
+                      }}
+                      class="px-5 my-1 border-slate-800 border  cursor-pointer py-1 rounded-full bg-slate-800 mx-2"
+                      classList={{
+                        "!border-blue-600": tags().includes(tag),
+                      }}
+                    >
+                      {tag}
+                    </div>
+                  )}
+                </For>
+              </div>
+
               <button
                 onClick={() =>
                   update({
-                    user: { firstname: newPseudo() },
+                    user: {
+                      firstname: newPseudo(),
+                      company: company(),
+                      year: promotion(),
+                      tags: tags(),
+                    },
                     id: user()?.id ?? "",
                   })
                 }
-                class="rounded px-4 py-2 bg-slate-800 hover:scale-105 transition-all"
+                class="rounded mx-auto px-4 py-2 bg-slate-800 hover:scale-105 transition-all"
               >
                 <p class=" text-blue-500 text-xl  font-semibold">Enregistrer</p>
               </button>
             </div>
           }
         >
-          <Switch fallback={<StudentList students={localStudents() ?? []} />}>
-            <Match when={!localStudents()}>
-              <div class="font-bold text-2xl text-slate-500">Loading...</div>
-            </Match>
-          </Switch>
+          <StudentList />
+
           <A
             href="/me"
             class="fixed right-10 top-10 overflow-hidden rounded-full cursor-pointer bg-gray-800 h-10 w-10"

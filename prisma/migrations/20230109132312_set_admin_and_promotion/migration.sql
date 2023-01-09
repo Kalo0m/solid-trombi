@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "User" ADD COLUMN     "admin" BOOLEAN DEFAULT false,
+ADD COLUMN     "year" INTEGER DEFAULT 2022;

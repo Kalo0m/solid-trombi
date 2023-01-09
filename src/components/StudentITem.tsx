@@ -24,6 +24,9 @@ export default (props: { student: User }) => {
       <h2 class="text-xs font-semibold text-slate-500">
         {props.student.email}
       </h2>
+      <h2 class="text-xs font-semibold text-slate-500">
+        {props.student.company}
+      </h2>
     </div>
   );
 };
