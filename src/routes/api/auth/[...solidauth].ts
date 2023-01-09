@@ -21,16 +21,15 @@ export const authOpts: SolidAuthConfig = {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore types error
     GoogleProvider({
-      
       clientId: serverEnv.GOOGLE_CLIENT_ID,
-      clientSecret: serverEnv.GOOGLE_CLIENT_SECRET
+      clientSecret: serverEnv.GOOGLE_CLIENT_SECRET,
     }),
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore types error
     FacebookProvider({
       clientId: serverEnv.FACEBOOK_CLIENT_ID,
-      clientSecret: serverEnv.FACEBOOK_CLIENT_SECRET
-    })
+      clientSecret: serverEnv.FACEBOOK_CLIENT_SECRET,
+    }),
   ],
   session: {
     strategy: "database",
@@ -48,13 +47,12 @@ export const authOpts: SolidAuthConfig = {
       return Promise.resolve(attrs);
     },
     async redirect({ url, baseUrl }) {
-      console.log(baseUrl, url)
       // Allows relative callback URLs
-      if (url.startsWith("/")) return `${baseUrl}${url}`
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
       // Allows callback URLs on the same origin
-      else if (new URL(url).origin === baseUrl) return url
-      return baseUrl
-    }
+      else if (new URL(url).origin === baseUrl) return url;
+      return baseUrl;
+    },
   },
 };
 
