@@ -6,6 +6,7 @@ import {
   createSignal,
   createMemo,
   For,
+  createEffect,
 } from "solid-js";
 import { A, Title } from "solid-start";
 import { createServerData$ } from "solid-start/server";
@@ -20,10 +21,17 @@ import { SessionTokenError } from "@auth/core/errors";
 
 const Home: VoidComponent = () => {
   const tagsAvailable = ["Front", "Back", "Maths", "SSG", "Coq", "Anglais"];
-  const user = getCurrentUser();
   const [, update] = updateUser();
+
+  const user = createServerData$(async (_, { request }) => {
+    return (await getSession(request, authOpts))?.user as User;
+  });
+  createEffect(() => {
+    setPromotion(user()?.year ?? 2023);
+  });
+
   const [newPseudo, setNewPseudo] = createSignal(user()?.name ?? "");
-  const [promotion, setPromotion] = createSignal(2022);
+  const [promotion, setPromotion] = createSignal(user()?.year ?? 2023);
   const [company, setCompany] = createSignal("");
   const [tags, setTags] = createSignal<string[]>([]);
 
@@ -63,8 +71,8 @@ const Home: VoidComponent = () => {
                 class="bg-slate-700 border-none outline-none px-6 py-2 rounded-md  mb-4 mt-3"
               >
                 <option value="2023">2023 (A3)</option>
-                <option value="2024">2024 (A4)</option>
-                <option value="2025">2025 (A5)</option>
+                <option value="2024">2024 (A2)</option>
+                <option value="2025">2025 (A1)</option>
               </select>
               <label class="text-slate-100 text-xl">
                 Choisissez vos tags (max 3)

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import type { User } from "@prisma/client";
-import { Show } from "solid-js";
+import { Show, For } from "solid-js";
 
 export default (props: { student: User }) => {
   return (
@@ -21,12 +21,21 @@ export default (props: { student: User }) => {
       <h1 class="text-xl font-semibold text-white">
         {props.student.firstname} {props.student.lastname}
       </h1>
-      <h2 class="text-xs font-semibold text-slate-500">
+      <h2 class="text-xs mt-1 font-semibold text-slate-500">
         {props.student.email}
       </h2>
       <h2 class="text-xs font-semibold text-slate-500">
         {props.student.company}
       </h2>
+      <div class="flex mt-3 px-3 mb-6 flex-row self-start flex-wrap">
+        <For each={props.student.tags}>
+          {(tag) => (
+            <div class="px-2 my-1 text-[10px] py-1 rounded-full text-slate-200 bg-slate-600 mx-[2px]">
+              {tag}
+            </div>
+          )}
+        </For>
+      </div>
     </div>
   );
 };

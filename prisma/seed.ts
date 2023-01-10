@@ -3,16 +3,49 @@ const prisma = new PrismaClient();
 
 const users = [
   {
-    name: "Alice",
-    company: "Prisma",
-    firstname: "Alice",
-    lastname: "Smith",
+    name: "Racacax",
+    company: "Mixity",
+    firstname: "Clément",
   },
   {
-    name: "Théo",
+    name: "Julien44",
     company: "Kandy",
-    firstname: "Alice",
-    lastname: "Smith",
+    firstname: "Julien Raquois",
+  },
+  {
+    name: "Martin le bg",
+    company: "Apple",
+    firstname: "Martin",
+  },
+  {
+    name: "XxAntoinexX",
+    company: "Amazon",
+    firstname: "toinou",
+  },
+  {
+    name: "Pierre-victor",
+    company: "Trotoir",
+    firstname: "pvdevdb",
+  },
+  {
+    name: "LGigaud",
+    company: "tanstack",
+    firstname: "Lolox le goat",
+  },
+  {
+    name: "FooBar",
+    company: "Solid start <3",
+    firstname: "BarFoo",
+  },
+  {
+    name: "💶Le thug💶",
+    company: "Amazon",
+    firstname: "thug",
+  },
+  {
+    name: "Marine IMT",
+    company: "Solid.js",
+    firstname: "Marine Brier",
   },
 ];
 

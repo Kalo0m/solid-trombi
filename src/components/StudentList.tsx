@@ -26,10 +26,10 @@ const StudentList = () => {
         class="bg-slate-700 px-3 outline-none border-none py-2 rounded-md  mb-8 mt-3 text-left"
       >
         <option value="2023">2023 (A3)</option>
-        <option value="2024">2024 (A4)</option>
-        <option value="2025">2025 (A5)</option>
+        <option value="2024">2024 (A2)</option>
+        <option value="2025">2025 (A1)</option>
       </select>
-      <Suspense fallback={<p />}>
+      <Suspense fallback={<p class="text-slate-300">Chargement ...</p>}>
         <div class="flex flex-col justify-center items-center">
           <div class="mx-auto  grid grid-cols-4 gap-2">
             <For each={localStudents()}>
