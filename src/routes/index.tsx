@@ -51,7 +51,7 @@ const Home: VoidComponent = () => {
                 type="text"
                 value={newPseudo()}
                 onInput={(e) => setNewPseudo(e.currentTarget.value)}
-                class="mt-3 mb-4 h-10  border-spacing-44 transition-all border-collapse border-opacity-0 border-none focus:!border focus:border-blue-600 selection:border-blue-600 outline-none px-4 py-2 w-72 text-xl text-white rounded-md bg-slate-700"
+                class="mt-3 mb-4 h-10  transition-all border-collapse border-opacity-0 border-none focus:!border focus:border-blue-600  outline-none px-4 py-2 w-72 text-xl text-white rounded-md bg-slate-700"
               />
               <label class="text-slate-100 text-xl">
                 Quel est votre entreprise ?
@@ -60,7 +60,7 @@ const Home: VoidComponent = () => {
                 type="text"
                 value={company()}
                 onInput={(e) => setCompany(e.currentTarget.value)}
-                class="mt-3 mb-4 h-10  border-spacing-44 transition-all border-collapse border-opacity-0 border-none focus:!border focus:border-blue-600 selection:border-blue-600 outline-none px-4 py-2 w-72 text-xl text-white rounded-md bg-slate-700"
+                class="mt-3 mb-4 h-10  border-spacing-44 transition-all border-collapse border-opacity-0 border-none focus:!border focus:border-blue-600 outline-none px-4 py-2 w-72 text-xl text-white rounded-md bg-slate-700"
               />
               <label class="text-slate-100 text-xl">
                 Quelle est votre promotion ?
@@ -102,6 +102,7 @@ const Home: VoidComponent = () => {
               </div>
 
               <button
+                disabled={newPseudo().length === 0}
                 onClick={() =>
                   update({
                     user: {
@@ -113,9 +114,9 @@ const Home: VoidComponent = () => {
                     id: user()?.id ?? "",
                   })
                 }
-                class="rounded mx-auto px-4 py-2 bg-slate-800 hover:scale-105 transition-all"
+                class=" disabled:hover:scale-100 disabled:pointer-events-none disabled:text-slate-400 text-blue-500 rounded mx-auto px-4 py-2 bg-slate-800 hover:scale-105 transition-all"
               >
-                <p class=" text-blue-500 text-xl  font-semibold">Enregistrer</p>
+                <p class="  text-xl  font-semibold">Enregistrer</p>
               </button>
             </div>
           }
@@ -129,7 +130,9 @@ const Home: VoidComponent = () => {
             <Show
               when={user()?.image}
               fallback={
-                <CgProfile color="text-red-500" class="text-blue-500" />
+                <div class="flex justify-center items-center w-full h-full">
+                  <CgProfile color="text-red-500 " class="text-blue-500" />
+                </div>
               }
             >
               <img class="w-full h-full bg-cover" src={user()?.image ?? ""} />

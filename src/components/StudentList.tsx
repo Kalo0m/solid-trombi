@@ -2,7 +2,7 @@ import type { User } from "@prisma/client";
 import { ParentComponent, Suspense } from "solid-js";
 import { createSignal } from "solid-js";
 import { For } from "solid-js";
-import { createStudentAction } from "~/service/student";
+import { createStudentAction, getCurrentUser } from "~/service/student";
 import StudentITem from "./StudentITem";
 import { createServerData$ } from "solid-start/server";
 import { prisma } from "../server/db/client";
@@ -12,16 +12,20 @@ type StudentListProps = {
 };
 
 const StudentList = () => {
-  const [promotion, setPromotion] = createSignal(2023);
+  const [promotion, setPromotion] = createSignal<number>();
+
+  const user = getCurrentUser();
+  // falls back to the default user
+  const promotionFilter = () => promotion() ?? user()?.year;
 
   const localStudents = createServerData$(
-    ([, year]) => prisma.user.findMany({ where: { year: year as number } }),
-    { key: () => ["users", promotion()] }
+    ([, year]) => prisma.user.findMany({ where: { year: year } }),
+    { key: () => ["users", promotionFilter()] as const }
   );
   return (
     <div>
       <select
-        value={promotion()}
+        value={promotionFilter()?.toString()}
         onChange={(e) => setPromotion(parseInt(e.currentTarget.value))}
         class="bg-slate-700 px-3 outline-none border-none py-2 rounded-md  mb-8 mt-3 text-left"
       >

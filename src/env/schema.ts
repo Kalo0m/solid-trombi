@@ -18,6 +18,8 @@ export const serverScheme = z.object({
   AUTH_TRUST_HOST: z.string().optional(),
   NEXTAUTH_URL: z.string().optional(),
   DATABASE_URL: z.string(),
+  EMAIL_SERVER: z.string(),
+  EMAIL_FROM: z.string(),
 });
 
 export const clientScheme = z.object({

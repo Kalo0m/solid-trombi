@@ -25,18 +25,19 @@
     "vite": "^3.1.0"
   },
   "dependencies": {
+    "@auth/core": "^0.2.4",
+    "@auth/solid-start": "^0.1.0",
+    "@next-auth/prisma-adapter": "^1.0.5",
     "@prisma/client": "^4.6.1",
     "@solidjs/meta": "^0.28.2",
     "@solidjs/router": "^0.6.0",
     "dotenv": "^16.0.3",
+    "nodemailer": "^6.8.0",
     "solid-icons": "^1.0.4",
     "solid-js": "^1.5.7",
     "solid-start": "^0.2.8",
     "undici": "5.11.0",
-    "zod": "^3.19.1",
-    "@auth/core": "^0.2.4",
-    "@auth/solid-start": "^0.1.0",
-    "@next-auth/prisma-adapter": "^1.0.5"
+    "zod": "^3.19.1"
   },
   "engines": {
     "node": ">=16"

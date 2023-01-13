@@ -7,6 +7,7 @@ import { AdapterUser } from "@auth/core/adapters";
 import GoogleProvider from "@auth/core/providers/google";
 import { redirect } from "solid-start";
 import FacebookProvider from "@auth/core/providers/facebook";
+import {Email} from "@auth/core/providers/email";
 
 export const authOpts: SolidAuthConfig = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -29,6 +30,12 @@ export const authOpts: SolidAuthConfig = {
     FacebookProvider({
       clientId: serverEnv.FACEBOOK_CLIENT_ID,
       clientSecret: serverEnv.FACEBOOK_CLIENT_SECRET,
+    }),
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore types error
+    Email({
+      server: process.env.EMAIL_SERVER,
+      from: process.env.EMAIL_FROM
     }),
   ],
   session: {
